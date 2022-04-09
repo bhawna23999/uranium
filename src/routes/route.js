@@ -1,134 +1,84 @@
 const express = require('express');
 const { route } = require('express/lib/application');
+// const res = require('express/lib/response');
+
 
 
 const router = express.Router();
 
-router.get('/movies',function(req,res)
-{
-    let arr = ["good will hunting","lean on me","the paper chase","forrest gump","theory of everyhting"]
+let players =
+[
+    {
+        "name": "manish",
+        "dob": "1/1/1995",
+        "gender": "male",
+        "city": "jalandhar",
+        "sports": [
+            "swimming"
+        ]
+    },
+    {
+        "name": "gopal",
+        "dob": "1/09/1995",
+        "gender": "male",
+        "city": "delhi",
+        "sports": [
+            "soccer"
+        ],
+    },
+    {
+        "name": "lokesh",
+        "dob": "1/1/1990",
+        "gender": "male",
+        "city": "mumbai",
+        "sports": [
+            "soccer"
+        ],
+    },
+]
 
-    res.send(arr)
-});
-
-router.get('/movies/:indexNumber', function(req,res)
+router.post('/players',function(req,res)
 {
-    let a;
-    let arr = ["good will hunting","lean on me","the paper chase","forrest gump","theory of everyhting"]
-    // for(let i=0; i<arr.length; i++)
+    let x = req.body.name
+    let otherplayer = req.body
+    console.log(x)
+    console.log(otherplayer)
+    let flag = 0;
+    for (let index = 0; index < players.length; index++) {
+        const element = players[index];
+        let {name} = element
+        if(x=== name)
+        {
+            flag = 2
+            break
+        }       
+    }
+    if(flag === 0)
+    {
+        players = [...players,otherplayer]
+    }
+                    //  ANOTHER METHOD
+
+    // let x = {}
+    // x =  req.body
+    // console.log(x)
+    // function object(players)
     // {
-    //     if(req.params.indexNumber == i)
+    //     // console.log(players)
+    //     for(let index=0; index<players.length; index++)
     //     {
-    //         a = arr[i]
-
+    //         let element = players[index]
+    //         if(element.name == x.name)
+    //         {
+    //             return 
+    //         }
     //     }
+    //     return players.push(x)
     // }
-    // if(req.params.indexNumber>arr.length)
-    // {
-    //     a = " use a valid index."
-    // }
-    // res.send(a)
-    if(req.params.indexNumber>=arr.length)
-    {
-        res.send('ERROR: Use a valid index')
-    }
-    res.send(arr[req.params.indexNumber])
-
+    // console.log(object(players))
+    res.send({data: players, status : true})
 
 });
-
-router.get('/films',function(req,res)
-{
-    let arr = [ 
-        {       
-        "id": 1,
-        "name": "The Shining"
-        }, 
-        {
-        "id": 2,
-        "name": "Incendies"
-        },
-        {
-        "id": 3,
-        "name": "Rang de Basanti"
-        }, 
-        {
-        "id": 4,
-        "name": "Finding Nemo"
-        }] 
-        res.send(arr)      
-});
-
-router.get('/films/:filmId',function(req,res)
-{
-    let arr = [ 
-        {       
-        "id": 1,
-        "name": "The Shining"
-        }, 
-        {
-        "id": 2,
-        "name": "Incendies"
-        },
-        {
-        "id": 3,
-        "name": "Rang de Basanti"
-        }, 
-        {
-        "id": 4,
-        "name": "Finding Nemo"
-        }] 
-
-        // if(req.params.filmId>= arr.length)
-        // {
-        //     res.send("no movie")
-        // }
-        // res.send(arr[req.params.filmId])
-
-        let a;
-        for(i=0; i<arr.length; i++)
-        {
-            console.log(arr[i].id)
-            if(req.params.filmId == arr[i].id)
-            {
-                a = arr[i]
-                
-            }           
-            
-        }
-        if(req.params.filmId>=arr.length)
-        {
-            a =  "No movie exists with this id"
-        }
-        res.send(a)
-
-})
-
-router.get('/test-me',function(req,res)
-{
-    let arr = [33,34,35,37,38,39]
-    
-    let sum = 0;
-    for(let index=0; index<arr.length; index++)
-    {
-        const element = arr[index]
-        sum += element   
-    }
-    // console.log(sum)   
-    let totalsum = (arr.length+1)* (arr[0]+arr[arr.length-1])/2   
-    // console.log(totalsum)
-    let missingNum = totalsum - sum
-    
-    // console.log(missingNum) 
-    res.send([missingNum])
-});
-
-// router.post('/test-api1',function(req,res)
-// {
-
-//     session/node-apis
-
-// })
 
 
 module.exports = router;
