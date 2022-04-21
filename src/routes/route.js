@@ -1,31 +1,32 @@
 const express = require('express');
 const router = express.Router();
+const userController = require("../controllers/userController")
+const productController = require("../controllers/productController")
+const orderController = require("../controllers/orderController")
+const middlewares = require("../middlewares/commonMiddlewares")
 
-const batchController = require("../controllers/batchController")
-const developersController = require("../controllers/developersController")
 
-
-
-
-router.get('/route1',function(req,res){
+router.get('/test-me',function(req,res){
     res.send("my first api")
 })
 
-router.post('/createbatch', batchController.createbatch);
 
-router.post('/createDeveloper',developersController.createDeveloper)
+router.post('/createUsers',middlewares.middleWare, userController.createUsers)
+
+router.get('/getUsers',userController.getUsers)
 
 
+router.post('/createProduct',productController.createProduct)
 
-router.get('/getbatchData',batchController.getbatchData)
+router.get('/getProduct', productController.getProduct)
 
-router.get('/getDeveloperData',developersController.getDeveloperData)
 
-router.get('/getDevelopersWithBatchesDetails',developersController.getDevelopersWithBatchesDetails)
+router.post('/createuserOrders',middlewares.middleWare,orderController.createuserOrders)
 
-router.get('/scholarshipdevelopers',developersController.scholarshipdevelopers)
+router.get('/getOrderData',orderController.getOrderData)
 
-router.get('/developers',developersController.developers)
+router.get('/getDatawithUserAndProductDetails', orderController.getDatawithUserAndProductDetails)
+
 
 
 module.exports = router;
